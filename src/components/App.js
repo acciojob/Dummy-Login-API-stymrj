@@ -1,76 +1,64 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-const users = [
-  { email: "user1@example.com", password: "1234" },
-  { email: "user2@example.com", password: "abcd" }
-];
+const App = () => {
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userError, setUserError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [loading, setLoading] = useState(false);
+    const[email, setEmail] = useState("")
+    const[password, setPassword] = useState("")
+    const[userErrorMsg, setUserErrorMsg] = useState("") 
+    const[passwordErrorMsg, setPasswordErrorMsg] = useState("") 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setUserError("");
-    setPasswordError("");
-
-    setLoading(true);
-
-    setTimeout(() => {
-      const foundUser = users.find((u) => u.email === email);
-
-      if (!foundUser) {
-        setUserError("User not found");
-      } else if (foundUser.password !== password) {
-        setPasswordError("Password Incorrect");
-      } else {
-        alert("Login Successful");
-        setEmail("");
-        setPassword("");
-      }
-
-      setLoading(false);
-    }, 3000);
-  };
-
+    const data = [
+    {
+        id: 1,
+        name: "ABC",
+        email: "abc@gmail.com",
+        password: "12"
+    },
+    {
+        id: 2,
+        name: "DEF",
+        email: "def@gmail.com",
+        password: "1234"
+    },
+    {
+        id: 3,
+        name: "GHI",
+        email: "ghi@gmail.com",
+        password: "123456"
+    }
+]
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          id="input-email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setUserError("");
-            setPasswordError("");
-          }}
-        />
-        {userError && <p id="user-error">{userError}</p>}
-      </div>
+    <div>
+        <input onChange={(e) => {
+            setEmail(e.target.value)
+        }} id='input-email' />
+        <p id='user-error'>{userErrorMsg}</p>
 
-      <div>
-        <input
-          id="input-password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setUserError("");
-            setPasswordError("");
-          }}
-        />
-        {passwordError && <p id="password-error">{passwordError}</p>}
-      </div>
+        <input onChange={(e) => {
+            setPassword(e.target.value)
+        }} id='input-password' />
+        <p id='password-error'>{passwordErrorMsg}</p>
 
-      <button id="submit-form-btn" type="submit" disabled={loading}>
-        {loading ? "Checking..." : "Login"}
-      </button>
-    </form>
-  );
+
+
+
+        <button onClick={() => {
+            const foundItem = data.find((item) => {
+                return item.email == email 
+            })
+            if(!foundItem)
+            {
+                setUserErrorMsg("User not found")
+                return
+            }
+            if(password != foundItem.password)
+            {
+                setPasswordErrorMsg("Password Incorrect")
+            }
+            // console.log(foundItem)
+        }} id='submit-form-btn'>Submit</button>
+    </div>
+  )
 }
+
+export default App
